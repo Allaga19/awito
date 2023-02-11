@@ -5,6 +5,13 @@ const modalBtnSubmit = document.querySelector('.modal__btn-submit');
 const modalSubmit = document.querySelector('.modal__submit');
 const catalog = document.querySelector('.catalog');
 const modalItem = document.querySelector('.modal__item');
+const modalBtnWarning = document.querySelector('.modal__btn-warning');
+
+// форма в модальном окне
+// получаем все элементы из формы
+const elementsModalSubmit = [...modalSubmit.elements]
+	.filter(elem => elem.tagName !== 'BUTTON');   // 58:40 // исключение кнопки
+// console.log(elementsModalSubmit);
 
 
 // открытие и закрытие модального окна
@@ -32,6 +39,24 @@ const closeModalEsc = event => {
 	}
 };
 
+// События для формы в модальном окне
+modalSubmit.addEventListener('input', () => {
+	// прверка на заполнение всех input формы
+	const validForm = elementsModalSubmit.every(elem => elem.value);
+	console.log(validForm);
+	// разблокировка кнопки "отправить" в модальном окне
+	modalBtnSubmit.disabled = !validForm;
+	modalBtnWarning.style.display = validForm ? 'none' : ''; 
+	/*
+	// или подругому
+	if (validForm) {
+		modalBtnWarning.style.display = 'none';
+	} else {
+		modalBtnWarning.style.display = '';
+	}
+	*/
+});
+
 // Отлавливаем событие click, модальное окно
 addAd.addEventListener('click', () => {
 	// открытие модального окна формы
@@ -57,3 +82,4 @@ catalog.addEventListener('click', (event) => {
 	}
 });
 
+// 01:19
