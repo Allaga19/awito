@@ -1,4 +1,8 @@
-// 'use strict';
+'use strict';
+// массив для объявления
+const dataBase = [];
+
+
 const modalAdd = document.querySelector('.modal__add');
 const addAd = document.querySelector('.add__ad');
 const modalBtnSubmit = document.querySelector('.modal__btn-submit');
@@ -56,6 +60,17 @@ modalSubmit.addEventListener('input', () => {
 	}
 	*/
 });
+// избавляемся от перезагрузки страницы
+// блокируем стандартное поведение браузера
+modalSubmit.addEventListener('submit', event => {
+	event.preventDefault();
+	const itemObj = {};
+	for (const elem of elementsModalSubmit) {
+		itemObj[elem.name] = elem.value;
+	}
+	dataBase.push(itemObj);
+	modalSubmit.reset();
+});
 
 // Отлавливаем событие click, модальное окно
 addAd.addEventListener('click', () => {
@@ -67,19 +82,18 @@ addAd.addEventListener('click', () => {
 	document.addEventListener('keydown', closeModalEsc);
 });
 
-// Закрытие модальных окон
-modalAdd.addEventListener('click', closeModal);
-modalItem.addEventListener('click', closeModal);
-
 // получаем модальное окно карточки 
 catalog.addEventListener('click', (event) => {
 	const target = event.target;
+
 	if (target.closest('.card')) {
 		// открытие модального окна карточки
 		modalItem.classList.remove('hide');
-	// Закрытие модального окна по кнопке Esc
-	document.addEventListener('keydown', closeModalEsc);
+		// Закрытие модального окна по кнопке Esc
+		document.addEventListener('keydown', closeModalEsc);
 	}
 });
 
-// 01:19
+// Закрытие модальных окон
+modalAdd.addEventListener('click', closeModal);
+modalItem.addEventListener('click', closeModal);
